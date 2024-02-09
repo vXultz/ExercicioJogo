@@ -1,11 +1,13 @@
 public class Jogador {
 
-    public String nome;
-    public int idade;
-    public int pontuacao;
-    public int numeroTentativas;
+    // atributos
+    private String nome;
+    private int idade;
+    private int pontuacao;
+    private int numeroTentativas;
 
 
+    // construtor
     public Jogador(String nome, int idade) {
         this.nome = nome;
         this.idade = idade;
@@ -13,13 +15,13 @@ public class Jogador {
         this.numeroTentativas = 0;
     }
 
-
-    public void ganhaPontos(int pontos) {
-        this.pontuacao += pontos;
+    // métodos
+    public void ganhaPontos() {
+        this.pontuacao += 50;
     }
 
-    public void perdePontos(int pontos) {
-        this.pontuacao -= pontos;
+    public void perdePontos() {
+        this.pontuacao -= 50;
         if (this.pontuacao < 0) {
             this.pontuacao = 0;
         }
@@ -29,6 +31,8 @@ public class Jogador {
         this.numeroTentativas++;
     }
 
+
+    // getters e setters
     public String getNome() {
         return nome;
     }
@@ -60,4 +64,5 @@ public class Jogador {
     public void setNumeroTentativas(int numeroTentativas) {
         this.numeroTentativas = numeroTentativas;
     }
+
 }
