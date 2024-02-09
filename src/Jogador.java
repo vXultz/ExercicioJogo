@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 public class Jogador {
 
     // atributos
@@ -18,10 +22,12 @@ public class Jogador {
     // métodos
     public void ganhaPontos() {
         this.pontuacao += 50;
+        atualizarMelhoresJogadores();
     }
 
     public void perdePontos() {
         this.pontuacao -= 50;
+        atualizarMelhoresJogadores();
         if (this.pontuacao < 0) {
             this.pontuacao = 0;
         }
@@ -65,4 +71,20 @@ public class Jogador {
         this.numeroTentativas = numeroTentativas;
     }
 
+
+    public static List<Jogador> melhoresJogadores = new ArrayList<>();
+
+    private static void atualizarMelhoresJogadores() {
+        melhoresJogadores.sort(Comparator.comparingInt(Jogador::getPontuacao).reversed());
+    }
+
+    public static void rankingJogadores() {
+        atualizarMelhoresJogadores();
+        int top10 = Math.min(10, melhoresJogadores.size());
+        System.out.println("Ranking dos jogadores:");
+        for (int i = 0; i < top10; i++) {
+            Jogador jogador = melhoresJogadores.get(i);
+            System.out.println(jogador.getNome() + " - " + (i + 1));
+        }
+    }
 }
