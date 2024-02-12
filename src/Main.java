@@ -15,8 +15,20 @@ public class Main {
 
 
         while (jogarNovamente.equalsIgnoreCase("s")) {
-            System.out.print("Nome: ");
-            String nome = entrada.nextLine();
+            String nome;
+            boolean nomeValido = false;
+
+            do {
+                System.out.print("Nome: ");
+                nome = entrada.nextLine();
+
+                if (Jogador.verificacaoJogador(nome)){
+                    System.out.println("Nome já existe! Por favor escolha outro.");
+                }else {
+                    nomeValido = true;
+                }
+            } while (!nomeValido);
+
             System.out.print("Idade: ");
             int idade = entrada.nextInt();
             entrada.nextLine();
