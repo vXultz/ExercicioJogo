@@ -7,9 +7,12 @@ public class Main {
 
         String jogarNovamente = "s";
         int multiplicador = 1;
+        Jogador ultimoJogador = null;
+        int posicao = Jogador.melhoresJogadores.indexOf(ultimoJogador) + 2;
 
-            System.out.println("Bem vindo ao jogo!");
-            System.out.println("Primeiramente crie o seu jogador!");
+        System.out.println("Bem vindo ao jogo!");
+        System.out.println("Primeiramente crie o seu jogador!");
+
 
         while (jogarNovamente.equalsIgnoreCase("s")) {
             System.out.print("Nome: ");
@@ -21,15 +24,17 @@ public class Main {
             Jogador jogador = new Jogador(nome, idade);
             jogador.setPontuacao(multiplicador * 50);
             Jogador.melhoresJogadores.add(jogador);
+            ultimoJogador = jogador;
 
             System.out.println("Criar outro jogador? (s/n)");
             jogarNovamente = entrada.nextLine();
             multiplicador++;
         }
         entrada.close();
+        Jogador.listaJogadores();
 
+        System.out.println("-------------------");
 
-        Jogador.rankingJogadores();
-
+        System.out.println("Sua posição no ranking " + ultimoJogador.getNome() + " - " + posicao + "º lugar");
     }
 }
