@@ -13,13 +13,19 @@ public class Jogador {
 
     // construtor
     public Jogador(String nome, int idade)  {
-        if (verificacaoJogador(nome)) {
-
-        }
         this.nome = nome;
         this.idade = idade;
         this.pontuacao = 0;
         this.numeroTentativas = 0;
+    }
+
+    public static Jogador buscarJogador(String nome) {
+        for (Jogador jogador : melhoresJogadores) {
+            if (jogador.getNome().equals(nome)) {
+                return jogador;
+            }
+        }
+        return null;
     }
 
     // métodos
@@ -77,7 +83,7 @@ public class Jogador {
 
     public static List<Jogador> melhoresJogadores = new ArrayList<>();
 
-    private static void atualizarMelhoresJogadores() {
+    public static void atualizarMelhoresJogadores() {
         melhoresJogadores.sort(Comparator.comparingInt(Jogador::getPontuacao).reversed());
     }
 
