@@ -9,10 +9,14 @@ public class Main {
 
         Jogo jogo = new Jogo();
 
-        while (jogarNovamente.equalsIgnoreCase("s")) {
-            jogo.jogar();
+        jogo.criarJogador();
 
-            System.out.println("Criar outro jogador e jogar novamente? (s/n)");
+        while (jogarNovamente.equalsIgnoreCase("s")) {
+
+            jogo.jogar();
+            jogo.jogar(3);
+
+            System.out.println("Jogar novamente? (s/n)");
             jogarNovamente = entrada.nextLine();
 
         }
@@ -21,7 +25,7 @@ public class Main {
 
         System.out.println("-------------------");
 
-        System.out.println("Sua posição no ranking " + Jogo.ultimoJogador.getNome() + " - " + Jogo.posicao + "º lugar");
+        System.out.println("Sua posição no ranking " + jogo.getMelhorJogador().getNome() + " - " + Jogo.posicao + "º lugar");
 
         System.out.println("-------------------");
 

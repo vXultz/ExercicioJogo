@@ -5,7 +5,6 @@ public class Jogo {
     private Jogador melhorJogador;
     private int numeroJogadas;
 
-    static Jogador ultimoJogador = null;
     static int posicao;
 
     public Jogo() {
@@ -13,15 +12,10 @@ public class Jogo {
         this.numeroJogadas = 0;
     }
 
-    public void jogar() {
+    public void criarJogador() {
         Scanner entrada = new Scanner(System.in);
-        String jogarNovamente = null;
-
-
         String nome;
         boolean nomeValido = false;
-
-        System.out.println("Bem-vindo ao jogo Pedra, Papel e Tesoura!");
 
         do {
             System.out.print("Digite seu nome: ");
@@ -40,8 +34,14 @@ public class Jogo {
 
         Jogador jogador = new Jogador(nome, idade);
         Jogador.melhoresJogadores.add(jogador);
-        ultimoJogador = jogador;
+        this.melhorJogador = jogador;
+    }
 
+    public void jogar() {
+        Scanner entrada = new Scanner(System.in);
+        String jogarNovamente = null;
+
+        System.out.println("Bem-vindo ao jogo Pedra, Papel e Tesoura!");
 
         do {
 
@@ -62,25 +62,67 @@ public class Jogo {
             int resultado = determinarResultado(escolhaJogador, escolhaComputador);
             if (resultado == 1) {
                 System.out.println("Parabéns! Você ganhou!");
-                jogador.ganhaPontos();
+                melhorJogador.ganhaPontos();
             } else if (resultado == -1) {
                 System.out.println("Você perdeu! Tente novamente.");
-                jogador.perdePontos();
+                melhorJogador.perdePontos();
             } else {
                 System.out.println("Empate! Tente novamente.");
             }
 
-            jogador.adicionaTentativas();
+            melhorJogador.adicionaTentativas();
 
             System.out.println("Jogar pedra, papel ou tesoura novamente? (s/n)");
             jogarNovamente = entrada.nextLine();
 
-            if (Jogador.melhoresJogadores.contains(ultimoJogador)) {
-                posicao = Jogador.melhoresJogadores.indexOf(ultimoJogador) + 1;
+            if (Jogador.melhoresJogadores.contains(melhorJogador)) {
+                posicao = Jogador.melhoresJogadores.indexOf(melhorJogador) + 1;
             } else {
-                Jogador.melhoresJogadores.add(ultimoJogador);
+                Jogador.melhoresJogadores.add(melhorJogador);
                 Jogador.atualizarMelhoresJogadores();
-                posicao = Jogador.melhoresJogadores.indexOf(ultimoJogador) + 1;
+                posicao = Jogador.melhoresJogadores.indexOf(melhorJogador) + 1;
+            }
+
+        } while (jogarNovamente.equalsIgnoreCase("s"));
+    }
+
+    public void jogar(int num) {
+        Scanner entrada = new Scanner(System.in);
+        String jogarNovamente = null;
+
+        System.out.println("Bem-vindo ao jogo de Adivinhação!");
+
+        do {
+
+            this.numeroJogadas++;
+
+            System.out.print("Adivinhe um número de 0 até " + num + ": ");
+            int escolhaJogador = entrada.nextInt();
+            entrada.nextLine();
+
+            int numeroComputador = (int) (Math.random() * (num + 1));
+
+            System.out.println("O computador escolheu o número: " + numeroComputador);
+
+            if (escolhaJogador == numeroComputador) {
+                System.out.println("Parabéns! Você acertou!");
+                melhorJogador.ganhaPontos();
+            } else {
+                System.out.println("Você errou! O número correto era: " + numeroComputador);
+                melhorJogador.perdePontos();
+            }
+
+            melhorJogador.adicionaTentativas();
+
+            System.out.println("Deseja jogar novamente? (s/n)");
+            jogarNovamente = entrada.nextLine();
+
+            if (Jogador.melhoresJogadores.contains(melhorJogador)) {
+                posicao = Jogador.melhoresJogadores.indexOf(melhorJogador) + 1;
+            } else {
+                Jogador.melhoresJogadores.add(melhorJogador);
+                Jogador.atualizarMelhoresJogadores();
+                posicao = Jogador.melhoresJogadores.indexOf(melhorJogador) + 1;
             }
 
         } while (jogarNovamente.equalsIgnoreCase("s"));
