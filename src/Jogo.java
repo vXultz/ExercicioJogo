@@ -19,9 +19,13 @@ public class Jogo {
 
         do {
             System.out.print("Digite seu nome: ");
-            nome = entrada.nextLine();
+            nome = entrada.nextLine().toUpperCase();
 
             if (Jogador.verificacaoJogador(nome)) {
+                System.out.println("Jogador encontrado! Bem-vindo de volta, " + nome + "!");
+                melhorJogador = Jogador.buscarJogador(nome);
+                return;
+            }else if (Jogador.verificacaoJogador(nome)) {
                 System.out.println("Nome já existe! Por favor escolha outro.");
             } else {
                 nomeValido = true;
@@ -95,14 +99,19 @@ public class Jogo {
         do {
 
             this.numeroJogadas++;
+            int escolhaJogador;
 
-            System.out.print("Adivinhe um número de 0 até " + num + ": ");
-            int escolhaJogador = entrada.nextInt();
-            entrada.nextLine();
+            do {
+                System.out.print("Adivinhe um número de 0 até " + num + ": ");
+                escolhaJogador = entrada.nextInt();
+                entrada.nextLine();
+
+                if (escolhaJogador > num) {
+                    System.out.println("Número fora do intervalo permitido. Por favor, digite um número entre 0 e " + num + ".");
+                }
+            } while (escolhaJogador > num);
 
             int numeroComputador = (int) (Math.random() * (num + 1));
-
-            System.out.println("O computador escolheu o número: " + numeroComputador);
 
             if (escolhaJogador == numeroComputador) {
                 System.out.println("Parabéns! Você acertou!");
@@ -154,15 +163,4 @@ public class Jogo {
         }
     }
 
-    public Jogador getMelhorJogador() {
-        return melhorJogador;
-    }
-
-    public void setMelhorJogador(Jogador melhorJogador) {
-        this.melhorJogador = melhorJogador;
-    }
-
-    public int getNumeroJogadas() {
-        return numeroJogadas;
-    }
 }
